@@ -35,16 +35,6 @@ namespace Seven.SaveSystem.Settings
                 _cryptographer = GetDefaultCryptographer();
             }
         }
-        
-        public static LocalDataSettings GetInstance()
-        {
-            if (_instance) return _instance;
-#if UNITY_EDITOR
-            if (!UnityEditor.EditorBuildSettings.TryGetConfigObject(Editor.LocalDataSettingsProvider.CONFIG_NAME, out _instance))
-#endif
-            _instance = FindObjectOfType<LocalDataSettings>();
-            return _instance;
-        }
 
         private static AesCrypto GetDefaultCryptographer()
         {
@@ -61,7 +51,19 @@ namespace Seven.SaveSystem.Settings
             {
                 aesCrypto = CreateInstance<AesCrypto>();
             }
+
             return aesCrypto;
+        }
+
+        public static LocalDataSettings GetInstance()
+        {
+            if (_instance) return _instance;
+#if UNITY_EDITOR
+            _instance = Editor.LocalDataSettingsProvider.GetOrCreateSettings();
+#else
+            _instance = FindObjectOfType<LocalDataSettings>();
+#endif
+            return _instance;
         }
     }
 }
