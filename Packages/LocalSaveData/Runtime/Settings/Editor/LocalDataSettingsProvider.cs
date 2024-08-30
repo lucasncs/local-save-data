@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System.IO;
 using UnityEditor;
 using UnityEngine;
@@ -15,11 +16,7 @@ namespace Seven.SaveSystem.Settings.Editor
 
         internal static LocalDataSettings CurrentSettings
         {
-            get
-            {
-                EditorBuildSettings.TryGetConfigObject(CONFIG_NAME, out LocalDataSettings settings);
-                return settings;
-            }
+            get => GetOrCreateSettings();
             set
             {
                 if (value == null)
@@ -96,7 +93,15 @@ namespace Seven.SaveSystem.Settings.Editor
             return settings;
         }
 
+        internal static LocalDataSettings GetOrCreateSettings()
+        {
+            if (!EditorBuildSettings.TryGetConfigObject(CONFIG_NAME, out LocalDataSettings settings))
+                settings = FindSettings();
+            return settings;
+        }
+
         [SettingsProvider]
         private static SettingsProvider CreateProjectSettingsMenu() => new LocalDataSettingsProvider();
     }
 }
+#endif
