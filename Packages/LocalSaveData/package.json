@@ -1,11 +1,14 @@
 {
   "name": "com.seven.local-save-data",
   "displayName": "Local Save Data",
+  "description": "A simple solution for persisting data locally, designed to substitute Unity's PlayerPrefs class.",
   "version": "1.0.0",
   "unity": "2019.2",
   "keywords": [
     "Save",
     "Data"
   ],
-  "description": "A simple solution for persisting data locally, designed to substitute Unity's PlayerPrefs class."
+  "author": {
+    "name": "Lucas Neves de Castro Souza"
+  }
 }
